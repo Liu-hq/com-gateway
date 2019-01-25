@@ -16,7 +16,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
-import static org.apache.logging.log4j.message.MapMessage.MapFormat.JSON;
 
 /**
  * Created by Administrator on 2019/1/24.
