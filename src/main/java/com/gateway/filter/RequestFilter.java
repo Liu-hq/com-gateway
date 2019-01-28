@@ -1,5 +1,6 @@
 package com.gateway.filter;
 
+import com.alibaba.fastjson.JSONObject;
 import com.gateway.utils.HttpClient;
 import org.apache.tomcat.util.bcel.classfile.Constant;
 import org.slf4j.Logger;
@@ -51,8 +52,30 @@ public class RequestFilter implements Filter{
                     chain.doFilter(request,response);
                     return;
                 }else{
-                    httpClient.client("http:/"+path, method,null);
-                    return;
+                    String resultInfo = httpClient.client("http:/"+path, method,null);
+                    PrintWriter writer = null;
+                    OutputStreamWriter osw = null;
+                    try {
+                        osw = new OutputStreamWriter(response.getOutputStream(),
+                                "UTF-8");
+                        writer = new PrintWriter(osw, true);
+                        String jsonStr = JSONObject.toJSONString(resultInfo);
+                        writer.write(jsonStr);
+                        writer.flush();
+                        writer.close();
+                        osw.close();
+                    } catch (UnsupportedEncodingException e) {
+                        logger.error("过滤器返回信息失败:" + e.getMessage(), e);
+                    } catch (IOException e) {
+                        logger.error("过滤器返回信息失败:" + e.getMessage(), e);
+                    } finally {
+                        if (null != writer) {
+                            writer.close();
+                        }
+                        if (null != osw) {
+                            osw.close();
+                        }
+                    }
                 }
             }
             logger.info("TestFilter1");
