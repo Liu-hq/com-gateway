@@ -52,7 +52,8 @@ public class RequestFilter implements Filter{
                     chain.doFilter(request,response);
                     return;
                 }else{
-                    String resultInfo = httpClient.client("http:/"+path, method,null);
+                    String remoteHost = req.getRemoteHost();
+                    String resultInfo = httpClient.client("http://"+remoteHost+path, method,null);
                     PrintWriter writer = null;
                     OutputStreamWriter osw = null;
                     try {
