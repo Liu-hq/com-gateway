@@ -52,7 +52,7 @@ public class RequestFilter implements Filter{
                     chain.doFilter(request,response);
                     return;
                 }else{
-                    String resultInfo = httpClient.client("http://172.16.105.149:31380"+path, method,null);
+                    String resultInfo = httpClient.client("http:/"+path, method,null);
                     PrintWriter writer = null;
                     OutputStreamWriter osw = null;
                     try {
