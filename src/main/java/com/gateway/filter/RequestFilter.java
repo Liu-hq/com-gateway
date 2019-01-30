@@ -52,9 +52,10 @@ public class RequestFilter implements Filter{
                     chain.doFilter(request,response);
                     return;
                 }else{
-                    String resultInfo = httpClient.client("http:/"+path, method,null);
+                    String resultInfo = httpClient.client("http:"+path, method,null);
                     PrintWriter writer = null;
                     OutputStreamWriter osw = null;
+
                     try {
                         osw = new OutputStreamWriter(response.getOutputStream(),
                                 "UTF-8");
